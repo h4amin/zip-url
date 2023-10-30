@@ -47,6 +47,10 @@ const zipUrlSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    public: {
+        type: Boolean,
+        default: true // Set this to true for public links
+    }
 });
 
 zipUrlSchema.pre('save', function (next) {
