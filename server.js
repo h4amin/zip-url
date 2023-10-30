@@ -93,14 +93,21 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/:zipurl', async (req, res) => {
-  const zip = await ZipUrl.findOne({ short: req.params.zipurl, userIdentifier: req.userIdentifier });
-  if (zip == null) return res.sendStatus(404);
+  const zip = await ZipUrl.findOne({ short: req.params.zipurl });
 
-  zip.clicks++;
-  zip.save();
+  if (zip == null) {
+    return res.sendStatus(404);
+  }
 
-  res.redirect(zip.full);
+  if (zip.public || zip.userIdentifier === req.userIdentifier) {
+    zip.clicks++;
+    zip.save();
+    return res.redirect(zip.full);
+  } else {
+    return res.sendStatus(403); // Forbidden to access private links of other users
+  }
 });
+
 
 app.post('/zipurl', async (req, res) => {
   // Get the user identifier from the cookie
