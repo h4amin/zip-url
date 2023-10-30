@@ -107,7 +107,7 @@ app.post('/zipurl', async (req, res) => {
   const userIdentifier = req.userIdentifier;
 
   // Create data associated with the user
-  await ZipUrl.create({ full: req.body.fullUrl, userIdentifier: userIdentifier });
+  await ZipUrl.create({ full: req.body.fullUrl, userIdentifier: userIdentifier, public: true });
 
   res.redirect('/');
 });
