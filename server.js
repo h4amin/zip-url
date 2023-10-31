@@ -77,7 +77,7 @@ app.use((req, res, next) => {
   // Check if the user has a unique identifier cookie, if not, create one
   if (!req.cookies.userIdentifier) {
     const userIdentifier = 'user_' + Date.now(); // Generate a unique user identifier
-    res.cookie('userIdentifier', userIdentifier, { maxAge: 900000 }); // Set a cookie with a 15-minute expiration
+    res.cookie('userIdentifier', userIdentifier); // Set a cookie with a 15-minute expiration
     req.userIdentifier = userIdentifier;
   } else {
     req.userIdentifier = req.cookies.userIdentifier;
